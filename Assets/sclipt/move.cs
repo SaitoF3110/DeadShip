@@ -12,6 +12,10 @@ public class move : MonoBehaviour
     public int m_facingx = 0;
     public int m_facing = 0;
 
+    public float x;
+    public float y;
+
+
     void Start()
     {
         m_rb2d = GetComponent<Rigidbody2D>();
@@ -21,6 +25,11 @@ public class move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //プレイヤー座標取得
+        Vector2 vector2 = this.transform.position;
+        x = vector2.x;
+        y = vector2.y;
+
         // 水平方向の入力を検出する
         float h = Input.GetAxisRaw("Horizontal");
         float g = Input.GetAxisRaw("Vertical");
