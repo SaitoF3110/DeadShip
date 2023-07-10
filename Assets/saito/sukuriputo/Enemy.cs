@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     public float moveSpeed = 1;
     public float stayinterval = 5;
     public float moveinterval = 5;
-    bool _isStan = false;//スタンしてるか
+    public bool _isStan = false;//スタンしてるか
     private Animator anim = null;
     public int facting;
     public bool circle = false;
@@ -168,13 +168,6 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.tag == "Wall")
         {
             wall = true;
-        }
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Bullet")
-        {
-            _isStan = true;
         }
     }
     void MoveFacting()

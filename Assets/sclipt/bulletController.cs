@@ -37,9 +37,17 @@ public class bulletController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Enemy")
+        if(collision.gameObject.tag == "Wall")
         {
             Destroy(this.gameObject);
         }
+        if(collision.gameObject.tag == "Enemy")
+        {
+            GameObject enemy = collision.gameObject;
+            Enemy es = enemy.GetComponent<Enemy>();
+            es._isStan = true;
+            Destroy(this.gameObject);
+        }
+        
     }
 }
