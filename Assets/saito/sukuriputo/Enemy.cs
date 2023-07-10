@@ -7,11 +7,12 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] LayerMask _wallLayer = 0;
     [SerializeField] LayerMask _layer = 0;
-    [SerializeField] Transform _targets;
+    Vector3 _targets;
     Rigidbody2D rb;
     public float moveSpeed = 1;
     public float stayinterval = 5;
     public float moveinterval = 5;
+    bool _isStan = false;//スタンしてるか
     private Animator anim = null;
     public int facting;
     public bool circle = false;
@@ -22,17 +23,50 @@ public class Enemy : MonoBehaviour
     bool fact = false;
     bool wall = false;
     bool find = false;
+    GameObject obj;
+    public enemyasset _enemyData;//エネミーデータ呼び出し
+
     void Start()
     {
+        obj = GameObject.Find("Player");
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 dir = (_targets.transform.position - this.transform.position).normalized * moveSpeed;
+       
+            if (_isStan == true)
+        {
+            if(facting == 0)
+            {
+                Instantiate(_enemyData.enemy1stanup, this.transform.position, this.transform.rotation);
+                Destroy(this.gameObject);
+            }
+            else if (facting == 1)
+            {
+                Instantiate(_enemyData.enemy1stanright, this.transform.position, this.transform.rotation);
+                Destroy(this.gameObject);
+            }
+            else if (facting == 2)
+            {
+                Instantiate(_enemyData.enemy1standown, this.transform.position, this.transform.rotation);
+                Destroy(this.gameObject);
+            }
+            else if (facting == 3)
+            {
+                Instantiate(_enemyData.enemy1stanleft, this.transform.position, this.transform.rotation);
+                Destroy(this.gameObject);
+            }
+        }
+
+
+
+        move trans = obj.GetComponent<move>();
+        _targets= new Vector3(trans.x,trans.y,0);
+
+        Vector3 dir = (_targets - this.transform.position).normalized * moveSpeed;
         Vector2 start = this.transform.position;
         Debug.DrawLine(start, start + new Vector2(dir.x,dir.y) * 4);
         RaycastHit2D hit = Physics2D.Linecast(start, start + new Vector2(dir.x, dir.y) * 4, _layer);
@@ -134,6 +168,13 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.tag == "Wall")
         {
             wall = true;
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Bullet")
+        {
+            _isStan = true;
         }
     }
     void MoveFacting()
