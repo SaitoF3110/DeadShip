@@ -10,9 +10,10 @@ public class ray : MonoBehaviour
     [SerializeField] Color[] m_colors = default;
     Rigidbody2D m_rb2d;
     float x = 0;
-    float scale = 1;
+    float scale_x = 1;
+    float scale_y = 1;
     bool found = false;
-
+    bool circle = false;
     private void Start()
     {
         m_rb2d = GetComponent<Rigidbody2D>();
@@ -29,19 +30,25 @@ public class ray : MonoBehaviour
         {
             transform.localScale = new Vector3(1,1,1);
             x = 0;
-            scale = -1;
+            scale_x = -1;
         }
         else if (x >=1)
         {
             transform.localScale = new Vector3(-1, 1, 1);
-            scale = 1;
+            scale_x = 1;
         }
+        //äeç¿ïWéÊìæs
+        GameObject obj = GameObject.FindWithTag("Player");
+        move states = obj.GetComponent<move>();
+        Vector2 vector = this.gameObject.transform.position;
 
+        float dis_x = states.x - vector.x;
+        float dis_y = states.y - vector.y;
 
 
         this.gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
-        Vector2 vector = this.gameObject.transform.position;
-        Ray ray = new Ray(new Vector2(vector.x + scale * 3,vector.y), new Vector3(scale, 0, 0));
+        
+        Ray ray = new Ray(new Vector2(vector.x + scale_x * 3,vector.y), new Vector3(dis_x, dis_y, 0));
         
 
         //RayÇÃí∑Ç≥
@@ -69,13 +76,13 @@ public class ray : MonoBehaviour
         {
             found = false;
         }
-        Debug.DrawRay(new Vector2(vector.x + scale * 3, vector.y), new Vector2(scale, 0), Color.red);
+        Debug.DrawRay(new Vector2(vector.x + scale_x * 3, vector.y), new Vector3(dis_x, dis_y, 0) * maxDistance, Color.red);
 
-        if (found == true)
+        if (found == true && circle == true)
         {
             Material itemInfo = this.GetComponent<Renderer>().material;
             //itemInfo.color = Color.red;
-            m_rb2d.velocity = new Vector2(scale * 4, 0);
+            m_rb2d.velocity = new Vector2(scale_x * 4, 0);
         }
         else
         {
@@ -91,6 +98,14 @@ public class ray : MonoBehaviour
         if(other.gameObject.tag =="Bullet")
         {
             Destroy(this.gameObject);
+        }
+        if(other.gameObject.tag == "Player")
+        {
+            circle = true;
+        }
+        else
+        {
+            circle= false;
         }
     }
 
