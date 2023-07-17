@@ -7,11 +7,13 @@ public class enemystan : MonoBehaviour
     // Start is called before the first frame update
     //[SerializeField] GameObject defa = default;
     [SerializeField] float _stanTime = 5;
+    AudioSource _audioSource;
     public enemyasset _enemyData;//エネミーアセットからプレハブ呼び出し
     float _timer;
     void Start()
     {
-        
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.Play();
     }
 
     // Update is called once per frame

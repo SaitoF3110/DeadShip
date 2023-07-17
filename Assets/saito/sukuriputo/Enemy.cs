@@ -68,8 +68,8 @@ public class Enemy : MonoBehaviour
 
         Vector3 dir = (_targets - this.transform.position).normalized * moveSpeed;
         Vector2 start = this.transform.position;
-        Debug.DrawLine(start, start + new Vector2(dir.x,dir.y) * 4);
-        RaycastHit2D hit = Physics2D.Linecast(start, start + new Vector2(dir.x, dir.y) * 4, _layer);
+        Debug.DrawLine(start, start + new Vector2(dir.x,dir.y) * 7);
+        RaycastHit2D hit = Physics2D.Linecast(start, start + new Vector2(dir.x, dir.y) * 7, _layer);
         Debug.DrawLine(start, start + new Vector2(facx, facy) * 2);
         RaycastHit2D movewall = Physics2D.Linecast(start, start + new Vector2(facx, facy) * 2, _wallLayer);
         find = false;
