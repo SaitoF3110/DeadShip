@@ -9,13 +9,13 @@ public class mission1 : MonoBehaviour
 
     private bool _isHolding = false;　//長押し中かを判定するフラグ
     private float _holdStartTime = 0.0f;　//長押しを開始した時間
-
+    [SerializeField] Animator animator;
     private bool _isActive = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
     }
 
     
@@ -49,7 +49,9 @@ public class mission1 : MonoBehaviour
 
                 Debug.Log("発電機の処理");
                 _isHolding = false;
+                animator.SetBool("_isActive", true);
             }
+            
         }
         else
         {
