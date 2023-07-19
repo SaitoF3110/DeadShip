@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class mission1 : MonoBehaviour
 {
+    [SerializeField]
+    private float _requiredHoldTime = 10.0f; //発電機を起動させるために必要なキーを押す秒数
 
-    public float requiredHoldTime = 10.0f;
+    private bool _isHolding = false;　//長押し中かを判定するフラグ
+    private float _holdStartTime = 0.0f;　//長押しを開始した時間
 
-    private bool isHolding = false;
-    private float holdStartTime = 0.0f;
-
-
+    private bool _isActive = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,34 +21,61 @@ public class mission1 : MonoBehaviour
     
      void Update()
     {
+        ////キーが押された瞬間
+        //if (Input.GetKeyDown(KeyCode.M))
+        //{
+        //    isHolding = true;
+        //    holdStartTime = Time.time;
+        //}
 
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            isHolding = true;
-            holdStartTime = Time.time;
-        }
-    
+        //// キーが離された瞬間または必要な長押し時間が経過した場合
+        //if (Input.GetKeyUp(KeyCode.M) || (isHolding && Time.time - holdStartTime >= requiredHoldTime))
+        //{
+        //    //発電機起動の処理実行
+        //    if (isHolding)
+        //    {
+                
+        //    }
 
-        if (Input.GetKeyUp(KeyCode.M) || (isHolding && Time.time - holdStartTime >= requiredHoldTime))
+        //    isHolding = false;
+        //}
+
+        if(_isHolding && Input.GetKey(KeyCode.M))
         {
-            
-            if (isHolding)
+            _holdStartTime += Time.deltaTime;
+            if (_holdStartTime >= _requiredHoldTime)
             {
-                Debug.Log("defused!");
-            }
+                _holdStartTime = 0.0f;
 
-            isHolding = false;
+                Debug.Log("発電機の処理");
+                _isHolding = false;
+            }
         }
+        else
+        {
+            _holdStartTime = 0;
+        }
+        
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player" && Input.GetKey(KeyCode.M)) 
+        if(collision.gameObject.CompareTag("Player"))
         {
-           if(!isHolding)
-            {
-
-            }
+            Debug.Log("Enter");
+            _isHolding = true;
         }
     }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Exit");
+            _isHolding = false;
+            _holdStartTime = 0;
+        }
+    }
+
+
 }
