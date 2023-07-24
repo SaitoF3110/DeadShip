@@ -7,6 +7,7 @@ public class move : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] float m_speed = 10f;
     [SerializeField] GameObject m_shot = default;
+    public bool _canMove = true;
     Rigidbody2D m_rb2d;
     private Animator anim = null;
     public int m_facingx = 0;
@@ -38,13 +39,13 @@ public class move : MonoBehaviour
         float horizontalKey = Input.GetAxis("Horizontal");
         float verticalKey = Input.GetAxis("Vertical");
 
-        if (horizontalKey != 0 && verticalKey == 0) 
+        if (horizontalKey != 0 && verticalKey == 0 && _canMove == true) 
         {
             m_rb2d.velocity = new Vector2(h * m_speed, 0);
             if (horizontalKey >0) { m_facingx = 90; m_facing = 1; }
             else if (horizontalKey < 0) { m_facingx = 270; m_facing = 3; }
         }
-        else if (verticalKey != 0 && horizontalKey == 0)
+        else if (verticalKey != 0 && horizontalKey == 0 && _canMove == true)
         {
             m_rb2d.velocity = new Vector2(0, g * m_speed);
         }
@@ -58,13 +59,13 @@ public class move : MonoBehaviour
         }
 
 
-        if (horizontalKey > 0)
+        if (horizontalKey > 0 && _canMove == true)
         {
             anim.SetBool("run", true);
             transform.localScale = new Vector3(-1, 1, 1);
             
         }
-        else if (horizontalKey < 0)
+        else if (horizontalKey < 0 && _canMove == true)
         {
             anim.SetBool("run", true);
             transform.localScale = new Vector3(1, 1, 1);
