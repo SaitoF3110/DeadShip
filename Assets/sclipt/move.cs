@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class move : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] float m_speed = 10f;
     [SerializeField] GameObject m_shot = default;
+    [SerializeField] bool muteki = false;
+    public int _gunNumber = 0;
     public bool _canMove = true;
     Rigidbody2D m_rb2d;
     private Animator anim = null;
@@ -96,13 +99,31 @@ public class move : MonoBehaviour
             anim.SetBool("dawn", false);
         }
         //’e‚ðŒ‚‚Â
-        bool shotKey = Input.GetKeyDown("space");
-        if (shotKey)
+        if (Input.GetKeyDown(KeyCode.Return))
         {
-            Vector2 posi = this.transform.position;
-            float x = posi.x;
-            float y = posi.y;
-            Instantiate(m_shot,new Vector2(x,y),Quaternion.Euler(0,0,m_facingx));
+            if (_gunNumber == 0)
+            {
+
+            }
+            else
+            {
+                Vector2 posi = this.transform.position;
+                float x = posi.x;
+                float y = posi.y;
+                Instantiate(m_shot, new Vector2(x, y), Quaternion.Euler(0, 0, m_facingx));
+                _gunNumber -= 1;
+            }
+            
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (muteki == false)
+        {
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                SceneManager.LoadScene("GameOver");
+            }
         }
     }
 }

@@ -43,7 +43,7 @@ public class TimeCounter : MonoBehaviour
         if (countdownSeconds <= 10)
         {
             // 0•b‚É‚È‚Á‚½‚Æ‚«‚Ìˆ—
-            BackGround.GetComponent<Image>().color = new Color(1f, 0f, 0f, 1f);
+            BackGround.GetComponent<Image>().color = new Color(1f, 0f, 0f, 0.1f);
         }
     }
 }
