@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,16 +9,16 @@ public class TimeCounter : MonoBehaviour
     //
     private float countdownSeconds;
     //
-    GameObject TimerText = default;
+    public GameObject TimerText = default;
     //
-    GameObject BackGround = default;
+    public GameObject BackGround = default;
 
     void Start()
     {
         //
-        TimerText = GameObject.Find("Timer");
+        //TimerText = GameObject.Find("Timer");
         //
-        BackGround = GameObject.Find("BackGround");
+        //BackGround = GameObject.Find("BackGround");
         //
         Image img = BackGround.GetComponent<Image>();
         //

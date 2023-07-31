@@ -445,6 +445,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countdownMinutes: 10
+  TimerText: {fileID: 1575639462}
+  BackGround: {fileID: 708091823}
 --- !u!1 &2066628306
 GameObject:
   m_ObjectHideFlags: 0
