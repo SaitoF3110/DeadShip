@@ -25,6 +25,10 @@ public class NewBehaviourScript : MonoBehaviour
                 _isClear = true;
             }
         }
+        else if(_isClear && Input.GetKey(KeyCode.M))
+        {
+            //ƒNƒŠƒAŒã‚Ìˆ—
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
